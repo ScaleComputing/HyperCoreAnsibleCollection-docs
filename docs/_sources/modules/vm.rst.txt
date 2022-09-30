@@ -1,0 +1,435 @@
+.. _scale_computing.hypercore.vm_module:
+
+vm -- Create, update or delete a VM.
+====================================
+
+Use this module to create, update or delete a VM. When creating or updating a VM, setting the disks, network nics and boot order is possible.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Create and start the VM with disks, nics and boot devices set. Attach ISO onto the VM. Add cloud init data
+     scale_computing.hypercore.vm:
+       vm_name: vm-integration-test-vm
+       description: Demo VM
+       state: present
+       tags:
+         - my-group
+         - mytag1
+         - mytag2
+       memory: "{{ '512 MB' | human_to_bytes }}"
+       vcpu: 2
+       attach_guest_tools_iso: true
+       power_state: start
+       force_reboot: true
+       shutdown_timeout: "{{ '5minutes' | community.general.to_time_unit('seconds') }}"
+       disks:
+         - type: virtio_disk
+           disk_slot: 0
+           size: "{{ '10.1 GB' | human_to_bytes }}"
+         - type: ide_cdrom
+           disk_slot: 0
+           iso_name: TinyCore-current.iso
+       nics:
+         - vlan: 0
+           type: RTL8139
+       boot_devices:
+         - type: virtio_disk
+           disk_slot: 0
+         - type: nic
+           nic_vlan: 0
+       cloud_init:
+         user_data: |
+           #cloud-config
+           valid:
+           - yaml: 1
+           - expression: 2
+         meta_data: "{{ lookup('file', 'cloud-init-user-data-example.yml') }}"
+     register: result
+
+   - name: Delete the VM
+     scale_computing.hypercore.vm:
+       vm_name: demo-VM
+       state: absent
+     register: result
+
+
+
+Notes
+-----
+
+.. note::
+   ``check_mode`` is not supported.
+
+
+
+See Also
+--------
+
+.. seealso::
+
+   - :ref:`scale_computing.hypercore.vm_info_module`
+   - :ref:`scale_computing.hypercore.vm_params_module`
+   - :ref:`scale_computing.hypercore.vm_boot_devices_module`
+   - :ref:`scale_computing.hypercore.vm_disk_module`
+   - :ref:`scale_computing.hypercore.vm_nic_module`
+   - :ref:`scale_computing.hypercore.vm_node_affinity_module`
+   - :ref:`scale_computing.hypercore.vm_replication_module`
+   - :ref:`scale_computing.hypercore.vm_clone_module`
+   - :ref:`scale_computing.hypercore.vm_import_module`
+   - :ref:`scale_computing.hypercore.vm_export_module`
+
+
+
+Parameters
+----------
+
+attach_guest_tools_iso (optional)
+  If supported by operating system, create an extra device to attach the Scale Guest OS tools ISO.
+
+  | **type**: bool
+
+boot_devices (optional)
+  Ordered list of boot devices (disks and nics) you want to set
+
+  | **type**: list
+
+  disk_slot (optional)
+    If setting the boot device order of disk, that is *type=virtio_disk*, *type=ide_disk*, *type=scsi_disk*, *type=ide_floppy* or *type=nvram* disk_slot is required.
+
+    If setting the boot device order of CD-ROM, that is *type=ide_cdrom*, at least one of *iso_name* or *disk_slot* is required.
+
+    If *type=nic*, disk_slot is not relevant.
+
+    At least one of *disk_slot*, *nic_vlan* and *iso_name* is required to identify the VM device to which we're setting the boot order.
+
+    | **type**: int
+
+  iso_name (optional)
+    The name of ISO image that CD-ROM device is attached to.
+
+    Only relevant if *type=ide_cdrom*. If *type=cdrom*, at least one of *iso_name* or *disk_slot* is required to identify CD-ROM device.
+
+    Otherwise, *iso_name* is not relevant.
+
+    At least one of *disk_slot*, *nic_vlan* and i(iso_name) is required to identify the vm device to which we're setting the boot order.
+
+    | **type**: str
+
+  nic_vlan (optional)
+    Nic's vlan.
+
+    If *type=nic*, *nic_vlan* is required.
+
+    Otherwise, *nic_vlan* is not relevant.
+
+    At least one of *disk_slot*, *nic_vlan* and *iso_name* is required to identify the vm device to which we're setting the boot order.
+
+    | **type**: int
+
+  type (required)
+    The type of device we want to set the boot order to.
+
+    If setting the boot order for nic, type should be equal to nic.
+
+    If setting the boot order for disk, type should be equal to one of the specific types, listed below.
+
+    | **type**: str
+    | **choices**: nic, ide_cdrom, virtio_disk, ide_disk, scsi_disk, ide_floppy, nvram
+
+
+cloud_init (optional)
+  Configuration to be used by cloud-init (Linux) or cloudbase-init (Windows).
+
+  When non-empty will create an extra ISO device attached to VirDomain as a NoCloud datasource.
+
+  There has to be cloud-config comment present at the beginning of cloud_init file or raw yaml.
+
+  | **type**: dict
+
+  meta_data (optional)
+    Configuration meta-data to be used by cloud-init (Linux) or cloudbase-init (Windows).
+
+    Valid YAML syntax.
+
+    | **type**: str
+
+  user_data (optional)
+    Configuration user-data to be used by cloud-init (Linux) or cloudbase-init (Windows).
+
+    Valid YAML syntax.
+
+    | **type**: str
+
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+description (optional)
+  VM's description.
+
+  Only relevant if *state=present*. value.
+
+  | **type**: str
+
+disks (optional)
+  List of disks we want to create.
+
+  Required if *state=present*.
+
+  | **type**: list
+
+  cache_mode (optional)
+    The cache mode the VM will use.
+
+    | **type**: str
+    | **choices**: none, writeback, writethrough
+
+  disk_slot (required)
+    Virtual slot the drive will occupy.
+
+    | **type**: int
+
+  iso_name (optional)
+    The name of the ISO image we want to attach to the CD-ROM.
+
+    Required if *type=ide_cdrom*
+
+    Only relevant if *type=ide_cdrom*.
+
+    | **type**: str
+
+  size (optional)
+    Logical size of the device in bytes.
+
+    | **type**: int
+
+  type (required)
+    The bus type the VM will use.
+
+    If *type=ide_cdrom*, it's assumed you want to attach ISO image to cdrom disk. In that case, field iso_name is required.
+
+    | **type**: str
+    | **choices**: ide_cdrom, virtio_disk, ide_disk, scsi_disk, ide_floppy, nvram
+
+
+force_reboot (optional)
+  Can VM be forced to power off and on.
+
+  Only used when modifications to the VM require it to be powered off and VM does not respond to a shutdown request within *shutdown_timeout* limit.
+
+  Before this is utilized, a shutdown request is sent.
+
+  | **type**: bool
+
+memory (optional)
+  VM's physical memory in bytes.
+
+  Required if *state=present*. Irrelevant if *state=absent*.
+
+  | **type**: int
+
+nics (optional)
+  List of network interfaces we want to create.
+
+  Required if *state=present*.
+
+  | **type**: list
+
+  connected (optional)
+    Is network interface connected or not.
+
+    | **type**: bool
+    | **default**: True
+
+  mac (optional)
+    Mac address of the network interface.
+
+    | **type**: str
+
+  type (optional)
+    Defines type of the network interface.
+
+    | **type**: str
+    | **default**: virtio
+    | **choices**: virtio, RTL8139, INTEL_E1000
+
+  vlan (optional)
+    Network interface virtual LAN.
+
+    | **type**: int
+
+
+power_state (optional)
+  Desired VM state.
+
+  States ``PAUSE`` and ``LIVEMIGRATE`` are not exposed in this module (this can be done with raw api module).
+
+  | **type**: str
+  | **default**: start
+  | **choices**: start, shutdown, stop, reboot, reset
+
+shutdown_timeout (optional)
+  How long does ansible controller wait for VMs response to a shutdown request.
+
+  In seconds.
+
+  | **type**: float
+  | **default**: 300
+
+snapshot_schedule (optional)
+  The name of an existing snapshot_schedule to assign to VM.
+
+  VM can have 0 or 1 snapshot schedules assigned.
+
+  | **type**: str
+
+state (required)
+  Desired state of the VM.
+
+  | **type**: str
+  | **choices**: present, absent
+
+tags (optional)
+  Tags of the VM.
+
+  The first tag determines the group that the VM is going to belong.
+
+  | **type**: list
+
+vcpu (optional)
+  Number of Central processing units on the VM.
+
+  Required if *state=present*. If *state=absent*, vcpu is not relevant.
+
+  | **type**: int
+
+vm_name (required)
+  Virtual machine name.
+
+  Used to identify selected virtual machine by name.
+
+  | **type**: str
+
+vm_name_new (optional)
+  Use it to rename a VM.
+
+  If the VM already exists, VM's new name.
+
+  Only relevant if *state=present*.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+record
+   Created VM, if creating the record. If deleting the record, none is returned.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      boot_devices:
+      - cache_mode: none
+        disable_snapshotting: false
+        disk_slot: 2
+        mount_points: []
+        name: ''
+        read_only: false
+        size: 10737418240
+        tiering_priority_factor: 8
+        type: virtio_disk
+        uuid: d48847d0-91b1-4edf-ab28-3be864494711
+        vm_uuid: 183c5d7c-1e2e-4871-84e8-9ef35bfda5ca
+      description: demo-vm-description
+      disks:
+      - cache_mode: none
+        disable_snapshotting: false
+        disk_slot: 0
+        mount_points: []
+        name: ''
+        read_only: false
+        size: 8100100100
+        tiering_priority_factor: 8
+        type: virtio_disk
+        uuid: e8c8aa6b-1043-48a0-8407-2c432d705378
+        vm_uuid: 1596dab1-6f90-494c-9607-b14221830433
+      nics:
+      - connected: true
+        ipv4_addresses: []
+        mac: 12-34-56-78-AB
+        type: virtio
+        uuid: 07a2a68a-0afa-4718-9c6f-00a39d08b67e
+        vlan: 15
+      node_affinity:
+        backup_node:
+          backplane_ip: 10.0.0.3
+          lan_ip: 10.0.0.4
+          node_uuid: f6v3c6b3-99c6-475b-8e8e-9ae2587db5fc
+          peer_id: 2
+        preferred_node:
+          backplane_ip: 10.0.0.1
+          lan_ip: 10.0.0.2
+          node_uuid: 638920f2-1069-42ed-b311-5368946f4aca
+          peer_id: 1
+        strict_affinity: true
+      power_state: stopped
+      snapshot_schedule: my-snapshot-schedule
+      tags: group-name,tag1,tag2
+      uuid: f0c91f97-cbfc-40f8-b918-ab77ae8ea7fb
+      vcpu: 2
+      vm_name: demo-vm
+
+vm_rebooted
+   Info if reboot of the VM was performed.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      vm_rebooted: true
+

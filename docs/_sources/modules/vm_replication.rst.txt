@@ -1,0 +1,126 @@
+.. _scale_computing.hypercore.vm_replication_module:
+
+vm_replication -- Handles VM replications
+=========================================
+
+Use vm_replication to perform actions regarding the replication of a specified virtual machine (VM) such as start, pause amd unpause replication of the VM.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Replicate demo-vm VM to DC2
+     scale_computing.hypercore.vm_replication:
+       vm_name: demo-vm
+       remote_cluster: PUB4
+       state: enabled
+
+   - name: Pause replication for demo-vm
+     scale_computing.hypercore.vm_replication:
+       vm_name: demo-vm
+       state: disabled
+
+   - name: Reenable replication for demo-vm
+     scale_computing.hypercore.vm_replication:
+       vm_name: demo-vm
+       state: reenabled
+
+
+
+Notes
+-----
+
+.. note::
+   ``check_mode`` is not supported.
+
+
+
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+remote_cluster (optional)
+  Remote cluster name, used to identify the selected remote cluster by name.
+
+  | **type**: str
+
+state (required)
+  State defines the desired state of the VM replication - ``enable``, ``disable``, ``reenable``.
+
+  Use ``enabled`` for initial replication setup.
+
+  Use ``disabled`` to pause a configured replication.
+
+  Use ``reenabled`` to unpause a configured replication. *remote_cluster* is optional in this case.
+
+  | **type**: str
+  | **choices**: enabled, disabled, reenabled
+
+vm_name (required)
+  Virtual machine name.
+
+  Used to identify selected virtual machine by name.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+record
+   The created or changed record for replication on a specified virtual machine.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      remote_cluster: cluster name example
+      state: enabled
+      vm_name: demo-vm
+

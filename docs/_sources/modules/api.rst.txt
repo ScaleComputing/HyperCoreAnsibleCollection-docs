@@ -1,0 +1,214 @@
+.. _scale_computing.hypercore.api_module:
+
+api -- API interaction with Scale Computing HyperCore
+=====================================================
+
+Perform a ``GET``, ``POST``, ``PATCH`` or ``DELETE`` request on resource(s) from the given endpoint. The api module can be used to perform raw API calls whenever there is no suitable concrete module or role implementation for a specific task.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Create a VM with specified data
+     scale_computing.hypercore.api:
+       action: post
+       cluster_instance:
+         host: "https://0.0.0.0"
+         username: admin
+         password: admin
+       endpoint: /rest/v1/VirDomain
+       data:
+         dom:
+           name: XLAB-jc1
+           tags: Xlab,jc1,us1
+           mem: 512100100
+           numVCPU: 2
+           blockDevs:
+             - type: VIRTIO_DISK
+               capacity: 8100100100
+               name: jc1-disk-0
+           netDevs:
+             - type: RTL8139
+               vlan: 0
+               connected: true
+         options:
+           attachGuestToolsISO: true
+     register: result
+
+   - name: Retrieve all VMs
+     scale_computing.hypercore.api:
+       action: get
+       cluster_instance:
+         host: https://0.0.0.0
+         username: admin
+         password: admin
+       endpoint: /rest/v1/VirDomain
+     register: result
+
+   - name: Retrieve a specific VM
+     scale_computing.hypercore.api:
+       action: get
+       cluster_instance:
+         host: https://0.0.0.0
+         username: admin
+         password: admin
+       endpoint: /rest/v1/VirDomain/0cdcdc95-ef66-461c-82a3-79ce03704981
+     register: result
+
+   - name: Delete a VM
+     scale_computing.hypercore.api:
+       action: delete
+       cluster_instance:
+         host: https://0.0.0.0
+         username: admin
+         password: admin
+       endpoint: /rest/v1/VirDomain/0fc7fe1f-2039-42c4-a2ad-945bccbe18b2
+     register: result
+
+   - name: Clone a VM from snapshot
+     scale_computing.hypercore.api:
+       action: post
+       cluster_instance:
+         host: https://0.0.0.0
+         username: admin
+         password: admin
+       endpoint: /rest/v1/VirDomain/17a23be5-9cf2-4d79-b02f-b2a0cb29a0f7/clone
+       data:
+         template:
+           name: XLAB-jc1
+           description: ""
+           tags: Xlab,jc1,us1
+     register: result
+
+   - name: Patch (an existing) record
+     scale_computing.hypercore.api:
+       action: post
+       cluster_instance:
+         host: https://0.0.0.0
+         username: admin
+         password: admin
+       endpoint: /rest/v1/VirDomain/17a23be5-9cf2-4d79-b02f-b2a0cb29a0f7
+       data:
+         dom:
+           name: XLAB-jc1-updated
+           tags: Xlab,jc1,us1,updated-tag
+           mem: 512100100
+           numVCPU: 2
+           blockDevs:
+             - type: VIRTIO_DISK
+               capacity: 8100100100
+               name: jc1-disk-0-updated
+           netDevs:
+             - type: RTL8139
+               vlan: 0
+               connected: true
+         options:
+           attachGuestToolsISO: true
+     register: result
+
+
+
+Notes
+-----
+
+.. note::
+   ``check_mode`` is not supported.
+
+
+
+
+
+
+Parameters
+----------
+
+action (required)
+  The action to perform.
+
+  | **type**: str
+  | **choices**: post, patch, delete, get, post_list
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+data (optional)
+  A Dict containing a data to be sent to HyperCore REST endpoint.
+
+  If *action=patch*, data we're updating the resource with.
+
+  If *action=get*, data option is going to be ignored.
+
+  If *action=post* the resource will be created from the data.
+
+  If *action=delete*, data option is going to be ignored.
+
+  If *action=post_list*, data will be send as list instead of dict.
+
+  | **type**: dict
+
+endpoint (required)
+  The raw endpoint that we want to perform post, patch or delete operation on.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+records
+   In case of *action=get*, the records from the specified endpoint. Below is example output for *action=get*.
+
+   In case of *action=post*, *action=patch* or *action=delete*, the task tag, returned from the HyperCore API.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      - connected: true
+        ipv4Addresses: []
+        macAddress: 7C:4C:58:18:23:4F
+        type: RTL8139
+        uuid: 81178af9-fb4c-4e98-9dba-d272adc2cae2
+        virDomainUUID: 17a23be5-9cf2-4d79-b02f-b2a0cb29a0f7
+

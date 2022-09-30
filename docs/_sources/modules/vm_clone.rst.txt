@@ -1,0 +1,145 @@
+.. _scale_computing.hypercore.vm_clone_module:
+
+vm_clone -- Handles cloning of the VM
+=====================================
+
+Use :ref:`scale_computing.hypercore.vm_clone <scale_computing.hypercore.vm_clone_module>` to clone a specified virtual machine.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Clone VM
+     scale_computing.hypercore.vm_clone:
+       vm_name: demo-vm-clone
+       source_vm_name: demo-vm
+       cloud_init:
+         user_data: "{{ lookup('file', 'cloud-init-user-data-example.yml') }}"
+         meta_data: |
+           #cloud-config
+           valid:
+             yaml: 3
+             expression: 4
+       tags:
+         - test
+         - tag
+     register: output
+
+
+
+Notes
+-----
+
+.. note::
+   ``check_mode`` is not supported.
+
+
+
+
+
+
+Parameters
+----------
+
+cloud_init (optional)
+  Configuration to be used by cloud-init (Linux) or cloudbase-init (Windows).
+
+  When non-empty will create an extra ISO device attached to VirDomain as a NoCloud datasource.
+
+  There has to be cloud-config comment present at the beginning of cloud_init file or raw yaml.
+
+  | **type**: dict
+
+  meta_data (optional)
+    Configuration meta-data to be used by cloud-init (Linux) or cloudbase-init (Windows).
+
+    Valid YAML syntax.
+
+    | **type**: str
+
+  user_data (optional)
+    Configuration user-data to be used by cloud-init (Linux) or cloudbase-init (Windows).
+
+    Valid YAML syntax.
+
+    | **type**: str
+
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+source_vm_name (required)
+  Name of the source virtual machine, to be cloned.
+
+  Used to identify selected virtual machine by name.
+
+  | **type**: str
+
+tags (optional)
+  Virtual machine tags.
+
+  Used to group virtual machine.
+
+  | **type**: list
+
+vm_name (required)
+  Name of the VM clone.
+
+  Used to identify a clone of the virtual machine by name.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+msg
+   Return message.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      Virtual machine - VM-TEST - cloning complete to - VM-TEST-clone
+

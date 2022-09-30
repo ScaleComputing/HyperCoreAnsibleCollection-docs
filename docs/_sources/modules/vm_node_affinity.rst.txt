@@ -1,0 +1,203 @@
+.. _scale_computing.hypercore.vm_node_affinity_module:
+
+vm_node_affinity -- Update virtual machine's node affinity
+==========================================================
+
+Module updates selected virtual machine node affinity. *preferred_node* or *backup_node* can be configured for each VM. The term *node* later in this text means either *preferred_node* or *backup_node*.
+
+The *node* can be selected by one or more parameters - *node_uuid*, *backplane_ip*, *lan_ip* and/or *peer_id*. If *node* is selected by multiple parameters, then all parameters must match, e.g. module internally performs logical ``AND`` when searching for matching *node* UUID.
+
+If *strict_affinity* is set to ``true``, VM will only run on *preferred_node* or *backup_node*.
+
+If *node* is not set, the old value of the *node.node_uuid* will be kept.
+
+If *node.node_uuid* is set to empty string, the existing value of the *node.node_uuid* will be deleted.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Set VM node affinity by node uuid
+     scale_computing.hypercore.vm_node_affinity:
+       vm_name: demo-vm
+       strict_affinity: true
+       preferred_node:
+         node_uuid: "412a3e85-8c21-4138-a36e-789eae3548a3"
+       backup_node:
+         node_uuid: "3dd52913-4e60-46fa-8ac6-07ba0b2155d2"
+
+   - name: Set VM node affinity by backplane IP, lan IP, and peer ID
+     scale_computing.hypercore.vm_node_affinity:
+       vm_name: demo-vm
+       strict_affinity: true
+       preferred_node:
+         backplane_ip: "10.0.0.1"
+         lan_ip: "10.0.0.1"
+         peer_id: 1
+       backup_node:
+         backplane_ip: "10.0.0.2"
+         lan_ip: "10.0.0.2"
+         peer_id: 2
+
+   - name: Set strict affinity to false and delete the nodes
+     scale_computing.hypercore.vm_node_affinity:
+       vm_name: demo-vm
+       strict_affinity: false
+       preferred_node:
+         node_uuid: ""
+       backup_node:
+         node_uuid: ""
+
+
+
+Notes
+-----
+
+.. note::
+   ``check_mode`` is not supported.
+
+
+
+See Also
+--------
+
+.. seealso::
+
+   - :ref:`scale_computing.hypercore.node_info_module`
+
+
+
+Parameters
+----------
+
+backup_node (optional)
+  Backup node in the event that preferred_node is unavailable
+
+  Can be set by ``node_uuid``, ``backplane_ip``, ``lan_ip`` or ``peer_id``
+
+  One of the options should be enough. In case that all are set, logical AND operation is used. Task will FAIL in case that node can not be uniquely identified.
+
+  | **type**: dict
+
+  backplane_ip (optional)
+    Backplane IP of the backup node
+
+    | **type**: str
+
+  lan_ip (optional)
+    Lan IP of the backup node
+
+    | **type**: str
+
+  node_uuid (optional)
+    Unique identifier of backup node
+
+    | **type**: str
+
+  peer_id (optional)
+    Peer ID of the backup node
+
+    | **type**: int
+
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+preferred_node (optional)
+  Preferred node to run the VM
+
+  Can be set by ``node_uuid``, ``backplane_ip``, ``lan_ip`` or ``peer_id``
+
+  One of the options should be enough. In case that all are set, logical AND operation is used. Task will FAIL in case that node can not be uniquely identified.
+
+  | **type**: dict
+
+  backplane_ip (optional)
+    Backplane IP of the preferred node
+
+    | **type**: str
+
+  lan_ip (optional)
+    Lan IP of the preferred node
+
+    | **type**: str
+
+  node_uuid (optional)
+    Unique identifier of preferred node
+
+    | **type**: str
+
+  peer_id (optional)
+    Peer ID of the preffered node
+
+    | **type**: int
+
+
+strict_affinity (required)
+  Enable or disable strict enforcement of affinity strategy.
+
+  If ``preferred_node`` and ``backup_node`` are not set (in task or in VM) and ``strict_affinity`` is set to True, the task will FAIL.
+
+  | **type**: bool
+
+vm_name (required)
+  Virtual machine name.
+
+  Used to identify selected virtual machine by name.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+msg
+   Info about node affinity update status.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      msg: Node affinity successfully updated.
+

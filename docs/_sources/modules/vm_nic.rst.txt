@@ -1,0 +1,224 @@
+.. _scale_computing.hypercore.vm_nic_module:
+
+vm_nic -- Handles actions over network interfaces
+=================================================
+
+Use vm_nics to perform actions over network interfaces (NIC) on a specified virtual machine.
+
+Can create, update or delete specified network interfaces.
+
+A single NIC can be identified by - *type* and *vlan*, or - *type* and *mac*
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Set NIC interface
+     scale_computing.hypercore.vm_nic:
+       vm_name: XLAB-demo-vm
+       force_reboot: true
+       shutdown_timeout: "{{ '5minutes' | community.general.to_time_unit('seconds') }}"
+       items:
+         - vlan: 0
+           type: RTL8139
+       state: set
+
+   - name: Remove all nic interfces
+     scale_computing.hypercore.vm_nic:
+       vm_name: XLAB-demo-vm
+       items: []
+       state: set
+
+   - name: Add/Update NICs interface
+     scale_computing.hypercore.vm_nic:
+       vm_name: XLAB-demo-vm
+       items:
+         - vlan: 1
+           type: virtio
+         - vlan: 2
+           type: RTL8139
+       state: present
+
+   - name: Remove one NIC interface
+     scale_computing.hypercore.vm_nic:
+       vm_name: XLAB-demo-vm
+       items:
+         - vlan: 1
+           type: virtio
+       state: absent
+
+   - name: Change VLAN on NIC
+     scale_computing.hypercore.vm_nic:
+       vm_name: XLAB-demo-vm
+       items:
+         - vlan: 1
+           vlan_new: 10
+       state: set
+
+   - name: Set NIC interfaces on multiple virtual machines
+     scale_computing.hypercore.vm_nic:
+       vm_name: "{{ item }}"
+       items:
+         - vlan: 0
+           type: RTL8139
+       state: present
+     loop:
+     - XLAB-demo-vm
+     - XLAB-POST-TEST
+     - XLAB-us11-example6
+
+   - name: Change mac on NIC
+     scale_computing.hypercore.vm_nic:
+       vm_name: XLAB-demo-vm
+       items:
+         - vlan: 1
+           mac_new: 01:23:45:67:89:AB
+       state: set
+
+
+
+Notes
+-----
+
+.. note::
+   ``check_mode`` is not supported.
+
+
+
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+force_reboot (optional)
+  Can VM be forced to power off and on.
+
+  Only used when modifications to the VM require it to be powered off and VM does not respond to a shutdown request within *shutdown_timeout* limit.
+
+  Before this is utilized, a shutdown request is sent.
+
+  | **type**: bool
+
+items (optional)
+  List of network interfaces.
+
+  | **type**: list
+
+  connected (optional)
+    Is network interface connected or not.
+
+    | **type**: bool
+    | **default**: True
+
+  mac (optional)
+    Mac address of the network interface.
+
+    | **type**: str
+
+  mac_new (optional)
+    Used to change mac address on the network interface.
+
+    | **type**: str
+
+  type (optional)
+    Defines type of the network interface.
+
+    | **type**: str
+    | **default**: virtio
+    | **choices**: virtio, RTL8139, INTEL_E1000
+
+  vlan (optional)
+    Network interface virtual LAN.
+
+    | **type**: int
+
+  vlan_new (optional)
+    Used to swap network interface to a different virtual LAN.
+
+    | **type**: int
+
+
+shutdown_timeout (optional)
+  How long does ansible controller wait for VMs response to a shutdown request.
+
+  In seconds.
+
+  | **type**: float
+  | **default**: 300
+
+state (required)
+  State defines which operation should plugin do over selected network interfaces.
+
+  | **type**: str
+  | **choices**: present, absent, set
+
+vm_name (required)
+  Virtual machine name.
+
+  Used to identify selected virtual machine by name.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+records
+   The created or changed record for nic on a specified virtual machine.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      - connected: true
+        ipv4_addresses: []
+        mac: 12-34-56-78-AB
+        type: virtio
+        uuid: 07a2a68a-0afa-4718-9c6f-00a39d08b67e
+        vlan: 15
+

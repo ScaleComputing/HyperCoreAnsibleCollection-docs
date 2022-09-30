@@ -1,0 +1,136 @@
+.. _scale_computing.hypercore.iso_module:
+
+iso -- Manage ISO images on HyperCore API
+=========================================
+
+Use this module to upload a new ISO image from ansible controller to HyperCore or delete existing ISO images from HyperCore API.
+
+An ISO image can be uploaded from a shared (SMB) storage or from an HTTP link by downloading it first to the ansible controller's local disk.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Create ISO image
+     scale_computing.hypercore.iso:
+       name: CentOS-Stream-9-latest-x86_64-dvd1.iso
+       source: /path/to/my.iso  # filename on ansible controller, never http/smb link
+       state: present
+
+   - name: Remove ISO image
+     scale_computing.hypercore.iso:
+       name: CentOS-Stream-9-latest-x86_64-dvd1.iso
+       state: absent
+
+
+
+Notes
+-----
+
+.. note::
+   ``check_mode`` is not supported.
+
+
+
+See Also
+--------
+
+.. seealso::
+
+   - :ref:`scale_computing.hypercore.iso_info_module`
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+name (required)
+  ISO image's name.
+
+  If ISO object with such name already exists on HyperCore API, no action will be performed.
+
+  Otherwise, ISO object with such name will be created and iso image from the source uploaded.
+
+  | **type**: str
+
+source (optional)
+  Only relevant if you want to post an iso image to the HyperCore API (setting ``state=present``).
+
+  path to ISO image on ansible controller.
+
+  It must not be http or smb link
+
+  | **type**: str
+
+state (required)
+  The desired state of iso object.
+
+  If *state=present*, the module uploads new ISO image from ansible controller.
+
+  If *state=absent*, the module deletes an existing ISO image from HyperCore API.
+
+  | **type**: str
+  | **choices**: present, absent
+
+
+
+Return Values
+-------------
+
+results
+   Updated ISO object from HyperCore API.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      - mounts: []
+        name: TinyCore-current.iso
+        path: scribe/171afce9-2452-4294-9bc4-6e8ae49f7e4c
+        readyForInsert: true
+        size: 23068672
+        uuid: 171afce9-2452-4294-9bc4-6e8ae49f7e4c
+

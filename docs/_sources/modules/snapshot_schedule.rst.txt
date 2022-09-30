@@ -1,0 +1,162 @@
+.. _scale_computing.hypercore.snapshot_schedule_module:
+
+snapshot_schedule -- Manage snap schedule to configure the desired schedule of snapshot creation.
+=================================================================================================
+
+Create and delete an automated VM snapshot schedule on HyperCore API endpoint ``/rest/v1/VirDomainSnapshotSchedule``.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Setup snapshot schedule
+     scale_computing.hypercore.snapshot_schedule:
+       name: demo-snap-schedule
+       state: present
+       recurrences:
+         - name: weekly-tuesday
+           frequency: "FREQ=WEEKLY;INTERVAL=1;BYDAY=TU"  # RFC-2445
+           start: "2010-01-01 00:00:00"
+           local_retention: "{{ 10 * 7*24*60*60 }}"  # 10 days, unit seconds
+           remote_retention:  # optional, None or 0 means same as local_retention.
+
+
+
+Notes
+-----
+
+.. note::
+   ``check_mode`` is not supported.
+
+
+
+See Also
+--------
+
+.. seealso::
+
+   - :ref:`scale_computing.hypercore.snapshot_schedule_info_module`
+   - :ref:`scale_computing.hypercore.vm_replication_module`
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+name (required)
+  Snapshot schedule's name.
+
+  Serves as unique identifier across all snapshot schedules.
+
+  | **type**: str
+
+recurrences (optional)
+  The recurrence rules we want to set for the snapshot schedule.
+
+  | **type**: list
+
+  frequency (required)
+    The frequency of the recurrence.
+
+    The value must comply with `RFC-2445 <https://www.rfc-editor.org/rfc/rfc2445>`_.
+
+    A valid example is ``FREQ=WEEKLY;INTERVAL=1;BYDAY=TU``.
+
+    | **type**: str
+
+  local_retention (required)
+    Retention time in seconds.
+
+    | **type**: int
+
+  name (required)
+    The recurrence's name.
+
+    | **type**: str
+
+  remote_retention (optional)
+    Remote retention time in seconds.
+
+    If either not set or set to either ``0`` or ``None``, remote_retention will be assigned *local_retention*'s value.
+
+    | **type**: int
+
+  start (required)
+    The start of the snapshot schedule in the local timezone timestamp.
+
+    | **type**: str
+
+
+state (required)
+  The desired state of the snapshot schedule object.
+
+  Use ``absent`` to ensure the snapshot schedule will be absent from the API and ``present`` to ensure snapshot schedule will remain present on the API.
+
+  | **type**: str
+  | **choices**: present, absent
+
+
+
+Return Values
+-------------
+
+record
+   The created or deleted record from the HyperCore API endpoint ``/rest/v1/VirDomainSnapshotSchedule``.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      name: demo-snap-schedule
+      recurrences:
+      - frequency: FREQ=WEEKLY;INTERVAL=1;BYDAY=TU
+        local_retention: 1296000
+        name: weekly-tuesday
+        remote_retention: 3024000
+        replication: true
+        start: '2010-01-01 00:00:00'
+      uuid: 74df5b47-c468-4626-a7e4-34eca13b2f81
+

@@ -1,0 +1,179 @@
+.. _scale_computing.hypercore.vm_params_module:
+
+vm_params -- Manage VM's parameters
+===================================
+
+Use vm_params to update VM's name, description, tags, memory, number of CPUs or change VM's power state.
+
+Can also be used to assign a snapshot schedule to the VM.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Set VM simple params
+     scale_computing.hypercore.vm_params:
+       vm_name: demo-vm
+       vm_name_new: renamed-vm
+       description: test vm params
+       force_reboot: true
+       shutdown_timeout: "{{ '5minutes' | community.general.to_time_unit('seconds') }}"
+       tags:
+         - Group-name
+         - tag1
+         - tag2
+       memory: "{{ '512 MB' | human_to_bytes }}"
+       vcpu: 2
+       power_state: shutdown
+       snapshot_schedule: demo-snap-schedule
+
+   - name: Delete description, tags and snapshot_schedule
+     scale_computing.hypercore.vm_params:
+       vm_name: demo-vm
+       description: ""
+       tags: [""]
+       snapshot_schedule: ""
+
+
+
+Notes
+-----
+
+.. note::
+   ``check_mode`` is not supported.
+
+
+
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+description (optional)
+  VM's description.
+
+  | **type**: str
+
+force_reboot (optional)
+  Can VM be forced to power off and on.
+
+  Only used when modifications to the VM require it to be powered off and VM does not respond to a shutdown request within *shutdown_timeout* limit.
+
+  Before this is utilized, a shutdown request is sent.
+
+  | **type**: bool
+
+memory (optional)
+  Amount of memory reserved, in bytes.
+
+  May only be modified if VM is in ``SHUTOFF`` or ``CRASHED`` state.
+
+  | **type**: int
+
+power_state (optional)
+  Desired VM state.
+
+  States ``PAUSE`` and ``LIVEMIGRATE`` are not exposed in this module (this can be done with raw api module).
+
+  | **type**: str
+  | **choices**: start, shutdown, stop, reboot, reset
+
+shutdown_timeout (optional)
+  How long does ansible controller wait for VMs response to a shutdown request.
+
+  In seconds.
+
+  | **type**: float
+  | **default**: 300
+
+snapshot_schedule (optional)
+  The name of an existing snapshot_schedule to assign to VM.
+
+  VM can have 0 or 1 snapshot schedules assigned.
+
+  | **type**: str
+
+tags (optional)
+  User-modifiable words for organizing a group of VMs. Multiple tags should be provided as list.
+
+  All existing tags will be overwritten, so group tag should always be included.
+
+  | **type**: list
+
+vcpu (optional)
+  Number of allotted virtual CPUs.
+
+  May only be modified if VM is in ``SHUTOFF`` or ``CRASHED`` state.
+
+  | **type**: int
+
+vm_name (required)
+  Virtual machine name.
+
+  Used to identify selected virtual machine by name.
+
+  | **type**: str
+
+vm_name_new (optional)
+  VM's new name.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+vm_rebooted
+   Info if reboot of the VM was performed.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      vm_rebooted: true
+

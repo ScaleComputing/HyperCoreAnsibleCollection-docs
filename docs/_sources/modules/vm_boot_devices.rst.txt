@@ -1,0 +1,251 @@
+.. _scale_computing.hypercore.vm_boot_devices_module:
+
+vm_boot_devices -- Manage HyperCore VM's boot devices
+=====================================================
+
+Use this module to add or remove a list of devices from boot order (add to end of list) or set the exact boot order of the devices.
+
+Can also be used to set a specific list of devices as first, but leave everything else as is.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Set exact boot order
+     scale_computing.hypercore.vm_boot_devices:
+       vm_name: name-of-desired-vm
+       items:
+         - type: virtio_disk
+           disk_slot: 2
+         - type: nic
+           nic_vlan: 10
+       state: set
+     register: result
+
+   - name: Set device as bootable
+     scale_computing.hypercore.vm_boot_devices:
+       vm_name: name-of-desired-vm
+       items:
+         - type: nic
+           nic_vlan: 2
+       state: present
+     register: result
+
+   - name: Set device as not bootable
+     scale_computing.hypercore.vm_boot_devices:
+       vm_name: name-of-desired-vm
+       items:
+         - type: nic
+           nic_vlan: 10
+       state: absent
+     register: result
+
+   - name: Set device as first boot device
+     scale_computing.hypercore.vm_boot_devices:
+       vm_name: name-of-desired-vm
+       force_reboot: true
+       shutdown_timeout: "{{ '5minutes' | community.general.to_time_unit('seconds') }}"
+       items:
+         - type: virtio_disk
+           disk_slot: 2
+         - type: nic
+           nic_vlan: 5
+       state: present
+       first: true
+     register: result
+
+   - name: Set ISO as first boot device. Identifying CD-ROM by field iso_name
+     scale_computing.hypercore.vm_boot_devices:
+       vm_name: name-of-desired-vm
+       items:
+         - type: ide_cdrom
+           iso_name: TinyCore-current.iso  # name of ISO image, but it can be used only if ISO is inside CD-ROM
+       state: present
+       first: true
+     register: result
+
+   - name: Set ISO as first boot device. Identifying CD-ROM by field disk_slot
+     scale_computing.hypercore.vm_boot_devices:
+       vm_name: name-of-desired-vm
+       items:
+         - type: ide_cdrom
+           disk_slot: 2
+       state: present
+       first: true
+     register: result
+
+
+
+Notes
+-----
+
+.. note::
+   ``check_mode`` is not supported.
+
+
+
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+first (optional)
+  Only relevant if *state=present*.
+
+  If you want to assign the device the first order, set the value of ``first`` to ``1``.
+
+  | **type**: bool
+
+force_reboot (optional)
+  Can VM be forced to power off and on.
+
+  Only used when modifications to the VM require it to be powered off and VM does not respond to a shutdown request within *shutdown_timeout* limit.
+
+  Before this is utilized, a shutdown request is sent.
+
+  | **type**: bool
+
+items (optional)
+  The boot devices items we want to change.
+
+  | **type**: list
+
+  disk_slot (optional)
+    If setting the boot device order of disk, that is *type=virtio_disk*, *type=ide_disk*, *type=scsi_disk*, *type=ide_floppy* or *type=nvram* disk slot is required to be specified.
+
+    If setting the boot device order of CD-ROM, that is *type=ide_cdrom*, at least one of *iso_name* or *disk_slot* is required.
+
+    If *type=nic*, disk_slot is not relevant.
+
+    At least one of *disk_slot*, *nic_vlan* and ``iso_name`` is required to identify the VM device to which we're setting the boot order.
+
+    | **type**: int
+
+  iso_name (optional)
+    The name of ISO image that CD-ROM device is attached to.
+
+    Only relevant if *type=ide_cdrom*. If *type=cdrom*, at least one of *iso_name* or *disk_slot* is required to identify CD-ROM device.
+
+    Otherwise, *iso_name* is not relevant.
+
+    At least one of *disk_slot*, *nic_vlan* and *iso_name* is required to identify the VM device to which we're setting the boot order.
+
+    | **type**: str
+
+  nic_vlan (optional)
+    NIC's vlan.
+
+    If *type=nic*, *nic_vlan* is required.
+
+    Otherwise, *nic_vlan* is not relevant.
+
+    At least one of *disk_slot*, *nic_vlan* or *iso_name* is required to identify the VM device to which we're setting the boot order.
+
+    | **type**: int
+
+  type (required)
+    The type of device we want to set the boot order to.
+
+    If setting the boot order for NIC, *type* should be equal to ``nic``.
+
+    If setting the boot order for disk, *type* should be equal to one of the specific disk types, listed below.
+
+    | **type**: str
+    | **choices**: nic, ide_cdrom, virtio_disk, ide_disk, scsi_disk, ide_floppy, nvram
+
+
+shutdown_timeout (optional)
+  How long does ansible controller wait for VMs response to a shutdown request.
+
+  In seconds.
+
+  | **type**: float
+  | **default**: 300
+
+state (required)
+  The desired state of the boot devices specified by *items*.
+
+  If *present* devices specified by *items* will be added to list of boot devices.
+
+  If *absent* devices specified by *items* will be removed from the list of boot devices.
+
+  If *set* VM boot devices will be set exactly to devices specified by *items*.
+
+  | **type**: str
+  | **choices**: present, absent, set
+
+vm_name (required)
+  Virtual machine name.
+
+  Used to identify selected virtual machine by name.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+record
+   VM's device that we're assigning the boot order to, which can be either disks from the API endpoint ``/VirDomainBlockDevices``, or nics from the API endpoint ``/VirDomainNetDevices``.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      cache_mode: none
+      disable_snapshotting: false
+      disk_slot: 2
+      mount_points: []
+      name: ''
+      read_only: false
+      size: 10737418240
+      tiering_priority_factor: 8
+      type: virtio_disk
+      uuid: d48847d0-91b1-4edf-ab28-3be864494711
+      vm_uuid: 183c5d7c-1e2e-4871-84e8-9ef35bfda5ca
+

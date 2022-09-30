@@ -1,0 +1,140 @@
+.. _scale_computing.hypercore.vm_export_module:
+
+vm_export -- Handles export of the virtual machine
+==================================================
+
+Use vm_export to export the virtual machine, to a specified location on a SMB server.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Export VM to SMB
+     scale_computing.hypercore.vm_export:
+       vm_name: demo-vm
+       smb:
+         server: IP-or-DNS-name-of-SMB-server
+         path: /share/path/to/vms/demo-vm-exported-v0
+         file_name: my_file.xml
+         username: user
+         password: pass
+     register: output
+
+
+
+
+Notes
+-----
+
+.. note::
+   ``check_mode`` is not supported.
+
+
+
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+smb (required)
+  SMB server, access and location data.
+
+  | **type**: dict
+
+  file_name (optional)
+    Specified xml file name.
+
+    If not specified, file name will be the same as directory name from the path parameter.
+
+    | **type**: str
+
+  password (required)
+    Password.
+
+    | **type**: str
+
+  path (required)
+    Specified location on the SMB server, where the exported virtual machine is to be exported to.
+
+    It must start with '/'.
+
+    | **type**: str
+
+  server (required)
+    Specified SMB server, where the selected virtual machine is to be exported to.
+
+    Has to be IP or DNS name.
+
+    | **type**: str
+
+  username (required)
+    Username.
+
+    | **type**: str
+
+
+vm_name (required)
+  Virtual machine name.
+
+  Used to identify selected virtual machine by name.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+msg
+   Return message.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      Virtual machine - VM-TEST - export complete.
+

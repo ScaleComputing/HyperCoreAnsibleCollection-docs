@@ -1,0 +1,110 @@
+.. _scale_computing.hypercore.iso_info_module:
+
+iso_info -- Retrieve ISO images
+===============================
+
+Retrieve a list of ISO images from HyperCore API endpoint ``/rest/v1/ISO``.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Retrieve all ISO images
+     scale_computing.hypercore.iso_info:
+     register: result
+
+   - name: Retrieve a specific ISO image by name
+     scale_computing.hypercore.iso_info:
+       name: SW_DVD9_Win_Server_STD_CORE_2022_2108.11_64Bit_English_DC_STD_MLF_X23-17134.ISO
+     register: result
+
+
+
+
+
+See Also
+--------
+
+.. seealso::
+
+   - :ref:`scale_computing.hypercore.iso_module`
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+name (optional)
+  ISO image's name.
+
+  If specified, the ISO image with that specific name will get returned.
+
+  Otherwise, all ISO images are going to get listed.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+records
+   ISO images for which we're performing the query.
+
+   If *name* is specified, the module will return exactly one record, if the record exists, and 0, if there is no matching name.
+
+   If *name* is not specified, all ISO images will be returned
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      - mounts: []
+        name: SW_DVD9_Win_Server_STD_CORE_2022_2108.11_64Bit_English_DC_STD_MLF_X23-17134.ISO
+        ready_for_insert: true
+        size: 5110759424
+        uuid: 51e6d073-7566-4273-9196-58720117bd7f
+

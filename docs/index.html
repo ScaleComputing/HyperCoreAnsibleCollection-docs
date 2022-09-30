@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scale Computing Hypercore Ansible collection &mdash; Hypercore Ansible Collection  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Modules" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> Hypercore Ansible Collection
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Hypercore Ansible Collection</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>Scale Computing Hypercore Ansible collection</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="scale-computing-hypercore-ansible-collection">
+<h1>Scale Computing Hypercore Ansible collection<a class="headerlink" href="#scale-computing-hypercore-ansible-collection" title="Permalink to this heading"></a></h1>
+<p>Official Ansible collection for Scale Computing HyperCore (HC3) v1 API.</p>
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-cjtp{background-color:#ecf4ff;border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-6e8n{background-color:#c0c0c0;border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-fgdu{background-color:#ecf4ff;border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+<tr>
+   <th class="tg-6e8n">module name</th>
+   <th class="tg-6e8n">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+   <td class="tg-fymr">vm</td>
+   <td class="tg-0pky">Create, update or delete a virtual machine.</td>
+</tr>
+<tr>
+   <td class="tg-fgdu">vm_info</td>
+   <td class="tg-cjtp">Get information about existing virtual machines.</td>
+</tr>
+<tr>
+   <td class="tg-fymr">vm_params</td>
+   <td class="tg-0pky">Partialy update a virtual machine. Use when changing some of the properties of an existing VM.</td>
+</tr>
+<tr>
+   <td class="tg-fgdu">vm_disk</td>
+   <td class="tg-cjtp">Update block devices on VM.</td>
+</tr>
+<tr>
+   <td class="tg-fymr">vm_nic</td>
+   <td class="tg-0pky">Update network interfaces (NICs) on a VM.</td>
+</tr>
+<tr>
+   <td class="tg-fgdu">vm_boot_devices</td>
+   <td class="tg-cjtp">Set up a boot order for the specified VM.</td>
+</tr>
+<tr>
+   <td class="tg-fymr">vm_node_affinity</td>
+   <td class="tg-0pky">Set up node affinity for a specified VM.</td>
+</tr>
+<tr>
+   <td class="tg-fgdu">node_info</td>
+   <td class="tg-cjtp">Get the list of all nodes on a cluster. Needed to set node affinities for VMs.</td>
+</tr>
+<tr>
+   <td class="tg-fymr">remote_cluster_info</td>
+   <td class="tg-0pky">Get Information regarding remote replication clusters.</td>
+</tr>
+<tr>
+   <td class="tg-fgdu">vm_replication</td>
+   <td class="tg-cjtp">Configure a VM replication.</td>
+</tr>
+<tr>
+   <td class="tg-fymr">vm_replication_info</td>
+   <td class="tg-0pky">Get a VM replication configuration.</td>
+</tr>
+<tr>
+   <td class="tg-fgdu">snapshot_schedule</td>
+   <td class="tg-cjtp">Configure a snapshot schedule.</td>
+</tr>
+<tr>
+   <td class="tg-fymr">snapshot_schedule_info</td>
+   <td class="tg-0pky">Get the existing list of snapshot schedules.</td>
+</tr>
+<tr>
+   <td class="tg-fgdu">iso</td>
+   <td class="tg-cjtp">Upload a new ISO image, or edit an existing one.</td>
+</tr>
+<tr>
+   <td class="tg-fymr">iso_info</td>
+   <td class="tg-0pky">Get a list of available ISO images.</td>
+</tr>
+<tr>
+   <td class="tg-fgdu">api</td>
+   <td class="tg-cjtp">Use to directly access to HyperCore API.</td>
+</tr>
+<tr>
+   <td class="tg-fymr">vm_export</td>
+   <td class="tg-0pky">Export a VM to an SMB server. </td>
+</tr>
+<tr>
+   <td class="tg-fgdu">vm_import</td>
+   <td class="tg-cjtp">Import a VM from an SMB or an HTTP URI.</td>
+</tr>
+<tr>
+   <td class="tg-fymr">vm_clone</td>
+   <td class="tg-0pky">Clone a VM.</td>
+</tr>
+</tbody>
+</table>
+<br>Tested on HyperCore API version v9.1.14.208456.
+<br><br><div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-right" title="Modules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, XLAB Steampunk.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

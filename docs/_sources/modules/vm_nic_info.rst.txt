@@ -1,0 +1,110 @@
+.. _scale_computing.hypercore.vm_nic_info_module:
+
+vm_nic_info -- Returns info about NIC
+=====================================
+
+Returns the information about all or a specific NIC on a selected virtual machine.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Retrieve NIC info on VLAN 15
+     scale_computing.hypercore.vm_nic_info:
+       vm_name: 'XLAB-demo-vm'
+       vlan: 15
+     register: testout
+
+   - name: Retrieve NIC info on all vlans
+     scale_computing.hypercore.vm_nic_info:
+       vm_name: 'XLAB-demo-vm'
+     register: testout
+
+
+
+
+
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+vlan (optional)
+  VLAN on which network interface is operating on.
+
+  Used to identify specific network interface.
+
+  If included only network interface with the specified VLAN will be returned.
+
+  | **type**: int
+
+vm_name (required)
+  Virtual machine name.
+
+  Used to identify selected virtual machine by name.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+records
+   A list of NICs records.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      - connected: true
+        ipv4_addresses: []
+        mac: 12-34-56-78-AB
+        type: virtio
+        uuid: 07a2a68a-0afa-4718-9c6f-00a39d08b67e
+        vlan: 15
+

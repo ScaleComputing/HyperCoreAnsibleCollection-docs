@@ -1,0 +1,109 @@
+.. _scale_computing.hypercore.remote_cluster_info_module:
+
+remote_cluster_info -- Retrieve a list of remote clusters.
+==========================================================
+
+Retrieve a list of remote clusters from the HyperCore API endpoint ``/rest/v1/RemoteClusterConnection``.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Get info about specific remote cluster
+     scale_computing.hypercore.remote_cluster_info:
+       remote_cluster: PUB4
+     register: result
+
+   - name: Get info about all remote clusters
+     scale_computing.hypercore.remote_cluster_info:
+     register: result
+
+
+
+
+
+See Also
+--------
+
+.. seealso::
+
+   - :ref:`scale_computing.hypercore.vm_replication_module`
+   - :ref:`scale_computing.hypercore.snapshot_schedule_module`
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+remote_cluster (optional)
+  Remote cluster's name.
+
+  If specified, the remote cluster with that specific name will get returned.
+
+  Otherwise, all remote clusters are going to get listed.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+records
+   A list of remote cluster records.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      - connection_status: established
+        name: PUB4
+        remote_node_ips:
+        - 10.5.11.11
+        remote_node_uuids:
+        - 0000-0000
+        replication_ok: true
+

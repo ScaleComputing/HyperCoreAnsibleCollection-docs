@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vm_replication_info – Returns info about replication of a specific VM &mdash; Hypercore Ansible Collection  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="vm_replication – Handles VM replications" href="vm_replication.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Hypercore Ansible Collection
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#authentication-parameters">Authentication parameters</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#module-reference">Module reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="api.html">api – API interaction with Scale Computing HyperCore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iso.html">iso – Manage ISO images on HyperCore API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iso_info.html">iso_info – Retrieve ISO images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="node_info.html">node_info – Returns information about the nodes in a cluster.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remote_cluster_info.html">remote_cluster_info – Retrieve a list of remote clusters.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="snapshot_schedule.html">snapshot_schedule – Manage snap schedule to configure the desired schedule of snapshot creation.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="snapshot_schedule_info.html">snapshot_schedule_info – Retrieve information about an automated VM snapshot schedule.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task_wait.html">task_wait – Wait for a HyperCore TaskTag to be finished.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm.html">vm – Create, update or delete a VM.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_boot_devices.html">vm_boot_devices – Manage HyperCore VM’s boot devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_clone.html">vm_clone – Handles cloning of the VM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_disk.html">vm_disk – Manage VM’s disks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_export.html">vm_export – Handles export of the virtual machine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_import.html">vm_import – Handles import of the virtual machine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_info.html">vm_info – Retrieve information about the VMs.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_nic.html">vm_nic – Handles actions over network interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_nic_info.html">vm_nic_info – Returns info about NIC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_node_affinity.html">vm_node_affinity – Update virtual machine’s node affinity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_params.html">vm_params – Manage VM’s parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_replication.html">vm_replication – Handles VM replications</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">vm_replication_info – Returns info about replication of a specific VM</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#return-values">Return Values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Hypercore Ansible Collection</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../modules.html">Modules</a> &raquo;</li>
+      <li>vm_replication_info – Returns info about replication of a specific VM</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/vm_replication_info.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="vm-replication-info-returns-info-about-replication-of-a-specific-vm">
+<span id="scale-computing-hypercore-vm-replication-info-module"></span><h1>vm_replication_info – Returns info about replication of a specific VM<a class="headerlink" href="#vm-replication-info-returns-info-about-replication-of-a-specific-vm" title="Permalink to this heading"></a></h1>
+<p>Returns information about replication of a specific virtual machine, if replication is configured.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.0.1.</span></p>
+</div>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
+<div class="highlight-yaml+jinja notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Module vm_replication_info sample output</span><span class="w"></span>
+<span class="w">  </span><span class="nt">scale_computing.hypercore.vm_replication_info</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">cluster_instance</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;host</span><span class="nv"> </span><span class="s">address&#39;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;username&#39;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;password&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vm_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">XLAB-demo-vm-clone</span><span class="w"></span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">records</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<dl>
+<dt>cluster_instance (optional)</dt><dd><p>Scale Computing HyperCore instance information.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: dict</div>
+</div>
+<dl>
+<dt>host (required)</dt><dd><p>The HyperCore instance URL.</p>
+<p>If not set, the value of the <code class="docutils literal notranslate"><span class="pre">SC_URL</span></code> environment variable will be used.</p>
+<p>For example “<a class="reference external" href="https://10.1.2.3:443">https://10.1.2.3:443</a>”.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: str</div>
+</div>
+</dd>
+<dt>password (required)</dt><dd><p>Password used for authentication.</p>
+<p>If not set, the value of the <code class="docutils literal notranslate"><span class="pre">SC_PASSWORD</span></code> environment variable will be used.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: str</div>
+</div>
+</dd>
+<dt>timeout (optional)</dt><dd><p>Timeout in seconds for the connection with the Scale Computing HyperCore API instance.</p>
+<p>If not set, the value of the <code class="docutils literal notranslate"><span class="pre">SC_TIMEOUT</span></code> environment variable will be used.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: float</div>
+</div>
+</dd>
+<dt>username (required)</dt><dd><p>Username used for authentication.</p>
+<p>If not set, the value of the <code class="docutils literal notranslate"><span class="pre">SC_USERNAME</span></code> environment variable will be used.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: str</div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt>vm_name (optional)</dt><dd><p>Virtual machine name</p>
+<p>Used to identify selected virtual machine by name</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: str</div>
+</div>
+</dd>
+</dl>
+</section>
+<section id="return-values">
+<h2>Return Values<a class="headerlink" href="#return-values" title="Permalink to this heading"></a></h2>
+<dl>
+<dt>records</dt><dd><p>The replication records.</p>
+<p><strong>sample</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">remote_cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PUB4</span><span class="w"></span>
+<span class="w">  </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enabled</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vm_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-vm</span><span class="w"></span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="vm_replication.html" class="btn btn-neutral float-left" title="vm_replication – Handles VM replications" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, XLAB Steampunk.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

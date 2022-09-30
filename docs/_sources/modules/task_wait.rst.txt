@@ -1,0 +1,91 @@
+.. _scale_computing.hypercore.task_wait_module:
+
+task_wait -- Wait for a HyperCore TaskTag to be finished.
+=========================================================
+
+A helper module, which waits until the object with a given task_tag is actually created/updated/deleted .
+
+Used within a context of a larger role. Whenever ``POST``, ``PATCH`` or ``DELETE`` method is applied on the HyperCore object, a dict in with keys ``createdUUID`` and ``taskTag`` is returned. Depending on taskTag's status, the object's request might be still in queue or may be already executed. This module ensures that the object's request is not on queue anymore, and execution is finished.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: Wait for the object to be created
+     scale_computing.hypercore.task_wait:
+       task_tag:
+         createdUUID: c2d38319-db6b-4cdf-93c6-d628b47c7809
+         taskTag: 1483
+
+
+
+
+
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+task_tag (required)
+  Result when calling ``POST``, ``PATCH`` or ``DELETE`` method on the HyperCore object.
+
+  | **type**: dict
+
+
+
+Return Values
+-------------
+
+records
+   The module will always return false, null, null,
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      - null
+

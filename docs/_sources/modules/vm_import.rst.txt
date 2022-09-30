@@ -1,0 +1,224 @@
+.. _scale_computing.hypercore.vm_import_module:
+
+vm_import -- Handles import of the virtual machine
+==================================================
+
+Use vm_import to import virtual machine, from a specified location.
+
+Use either *smb* or *http_uri*, which are mutually exclusive.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: import VM from SMB
+     scale_computing.hypercore.vm_import:
+       vm_name: demo-vm
+       smb:
+         server: IP-or-DNS-name-of-SMB-server
+         path: /share/path/to/vms/demo-vm-exported-v0
+         username: user
+         password: pass
+         file_name: my_file.xml
+     register: output
+
+   - name: import VM from SMB with cloud init data added
+     scale_computing.hypercore.vm_import:
+       vm_name: demo-vm
+       smb:
+         server: IP-or-DNS-name-of-SMB-server
+         path: /share/path/to/vms/demo-vm-exported-v0
+         username: user
+         password: pass
+         file_name: my_file.xml
+       cloud_init:
+         user_data: |
+           #cloud-config
+           valid:
+           - yaml: 1
+           - expression: 2
+         meta_data: "{{ lookup('file', 'cloud-init-user-data-example.yml') }}"
+     register: output
+
+   - name: import VM from URI
+     scale_computing.hypercore.vm_import:
+       vm_name: demo-vm
+       http_uri:
+         path: 'http://some-address-where-file-is-located'
+         file_name: actual_file_name.xml
+     register: output
+
+   - name: import VM from URI with cloud init data added
+     scale_computing.hypercore.vm_import:
+       vm_name: demo-vm
+       http_uri:
+         path: 'http://some-address-where-file-is-located'
+         file_name: actual_file_name.xml
+       cloud_init:
+         user_data: |
+           #cloud-config
+           valid:
+           - yaml: 1
+           - expression: 2
+         meta_data: "{{ lookup('file', 'cloud-init-user-data-example.yml') }}"
+     register: output
+
+
+
+Notes
+-----
+
+.. note::
+   ``check_mode`` is not supported.
+
+
+
+
+
+
+Parameters
+----------
+
+cloud_init (optional)
+  Configuration to be used by cloud-init (Linux) or cloudbase-init (Windows).
+
+  When non-empty will create an extra ISO device attached to VirDomain as a NoCloud datasource.
+
+  There has to be cloud-config comment present at the beginning of cloud_init file or raw yaml.
+
+  | **type**: dict
+
+  meta_data (optional)
+    Configuration meta-data to be used by cloud-init (Linux) or cloudbase-init (Windows).
+
+    Valid YAML syntax.
+
+    | **type**: str
+
+  user_data (optional)
+    Configuration user-data to be used by cloud-init (Linux) or cloudbase-init (Windows).
+
+    Valid YAML syntax.
+
+    | **type**: str
+
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+http_uri (optional)
+  Specified URI location.
+
+  path, file name.
+
+  | **type**: dict
+
+  file_name (required)
+    File name to be imported from the specified URI location.
+
+    | **type**: str
+
+  path (required)
+    Specified URI location, where the virtual machine is to be imported from.
+
+    | **type**: str
+
+
+smb (optional)
+  SMB server, access and location data.
+
+  | **type**: dict
+
+  file_name (optional)
+    Specified .xml file name.
+
+    If not specified, plugin assumes .xml file name is the same as directory name from the path parameter.
+
+    | **type**: str
+
+  password (required)
+    Password.
+
+    | **type**: str
+
+  path (required)
+    Specified location on the SMB server, where the exported virtual machine is to be imported from.
+
+    It must start with '/'.
+
+    | **type**: str
+
+  server (required)
+    Specified SMB server, where the selected virtual machine is to be imported from.
+
+    Has to be IP or DNS name.
+
+    | **type**: str
+
+  username (required)
+    Username.
+
+    | **type**: str
+
+
+vm_name (required)
+  Virtual machine name.
+
+  Used to identify selected virtual machine by name.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+msg
+   Return message.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      Virtual machine - VM-TEST - import complete.
+

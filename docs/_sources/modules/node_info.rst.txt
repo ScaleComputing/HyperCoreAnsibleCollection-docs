@@ -1,0 +1,91 @@
+.. _scale_computing.hypercore.node_info_module:
+
+node_info -- Returns information about the nodes in a cluster.
+==============================================================
+
+Returns information about the nodes in a cluster.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: List all cluster nodes
+     scale_computing.hypercore.node_info:
+     register: nodes
+
+
+
+
+
+See Also
+--------
+
+.. seealso::
+
+   - :ref:`scale_computing.hypercore.vm_node_affinity_module`
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+
+
+Return Values
+-------------
+
+records
+   A list of node records.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      - backplane_ip: 10.0.0.1
+        lan_ip: 10.0.0.1
+        node_uuid: 51e6d073-7566-4273-9196-58720117bd7f
+        peer_id: 1
+

@@ -1,0 +1,110 @@
+.. _scale_computing.hypercore.snapshot_schedule_info_module:
+
+snapshot_schedule_info -- Retrieve information about an automated VM snapshot schedule.
+=======================================================================================
+
+Retrieve information about an automated VM snapshot schedule on HyperCore API endpoint ``/rest/v1/VirDomainSnapshotSchedule``.
+
+
+.. versionadded:: 0.0.1
+
+
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+   
+   - name: List specific snapshot schedule
+     scale_computing.hypercore.snapshot_schedule_info:
+       name: demo-snap-schedule
+     register: result
+
+   - name: List all snapshot schedules
+     scale_computing.hypercore.snapshot_schedule_info:
+     register: result
+
+
+
+
+
+See Also
+--------
+
+.. seealso::
+
+   - :ref:`scale_computing.hypercore.snapshot_schedule_module`
+
+
+
+Parameters
+----------
+
+cluster_instance (optional)
+  Scale Computing HyperCore instance information.
+
+  | **type**: dict
+
+  host (required)
+    The HyperCore instance URL.
+
+    If not set, the value of the ``SC_URL`` environment variable will be used.
+
+    For example "https://10.1.2.3:443".
+
+    | **type**: str
+
+  password (required)
+    Password used for authentication.
+
+    If not set, the value of the ``SC_PASSWORD`` environment variable will be used.
+
+    | **type**: str
+
+  timeout (optional)
+    Timeout in seconds for the connection with the Scale Computing HyperCore API instance.
+
+    If not set, the value of the ``SC_TIMEOUT`` environment variable will be used.
+
+    | **type**: float
+
+  username (required)
+    Username used for authentication.
+
+    If not set, the value of the ``SC_USERNAME`` environment variable will be used.
+
+    | **type**: str
+
+
+name (optional)
+  Snapshot schedule's name.
+
+  If specified, specific snapshot schedule is going to be obtained.
+
+  Otherwise, all snapshot schedules are going to be listed.
+
+  | **type**: str
+
+
+
+Return Values
+-------------
+
+records
+   Records from the HyperCore API endpoint ``/rest/v1/VirDomainSnapshotSchedule``.
+
+   **sample**:
+
+   .. code-block:: yaml
+
+      name: demo-snap-schedule
+      recurrences:
+      - frequency: FREQ=WEEKLY;INTERVAL=1;BYDAY=TU
+        local_retention: 1296000
+        name: weekly-tuesday
+        remote_retention: 3024000
+        replication: true
+        start: '2010-01-01 00:00:00'
+      uuid: 74df5b47-c468-4626-a7e4-34eca13b2f81
+

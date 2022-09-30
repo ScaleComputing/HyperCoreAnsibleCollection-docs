@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vm_params – Manage VM’s parameters &mdash; Hypercore Ansible Collection  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="vm_replication – Handles VM replications" href="vm_replication.html" />
+    <link rel="prev" title="vm_node_affinity – Update virtual machine’s node affinity" href="vm_node_affinity.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Hypercore Ansible Collection
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#authentication-parameters">Authentication parameters</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#module-reference">Module reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="api.html">api – API interaction with Scale Computing HyperCore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iso.html">iso – Manage ISO images on HyperCore API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iso_info.html">iso_info – Retrieve ISO images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="node_info.html">node_info – Returns information about the nodes in a cluster.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remote_cluster_info.html">remote_cluster_info – Retrieve a list of remote clusters.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="snapshot_schedule.html">snapshot_schedule – Manage snap schedule to configure the desired schedule of snapshot creation.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="snapshot_schedule_info.html">snapshot_schedule_info – Retrieve information about an automated VM snapshot schedule.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task_wait.html">task_wait – Wait for a HyperCore TaskTag to be finished.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm.html">vm – Create, update or delete a VM.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_boot_devices.html">vm_boot_devices – Manage HyperCore VM’s boot devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_clone.html">vm_clone – Handles cloning of the VM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_disk.html">vm_disk – Manage VM’s disks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_export.html">vm_export – Handles export of the virtual machine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_import.html">vm_import – Handles import of the virtual machine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_info.html">vm_info – Retrieve information about the VMs.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_nic.html">vm_nic – Handles actions over network interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_nic_info.html">vm_nic_info – Returns info about NIC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_node_affinity.html">vm_node_affinity – Update virtual machine’s node affinity</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">vm_params – Manage VM’s parameters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#return-values">Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="vm_replication.html">vm_replication – Handles VM replications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_replication_info.html">vm_replication_info – Returns info about replication of a specific VM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Hypercore Ansible Collection</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../modules.html">Modules</a> &raquo;</li>
+      <li>vm_params – Manage VM’s parameters</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/vm_params.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="vm-params-manage-vm-s-parameters">
+<span id="scale-computing-hypercore-vm-params-module"></span><h1>vm_params – Manage VM’s parameters<a class="headerlink" href="#vm-params-manage-vm-s-parameters" title="Permalink to this heading"></a></h1>
+<p>Use vm_params to update VM’s name, description, tags, memory, number of CPUs or change VM’s power state.</p>
+<p>Can also be used to assign a snapshot schedule to the VM.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.0.1.</span></p>
+</div>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
+<div class="highlight-yaml+jinja notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set VM simple params</span><span class="w"></span>
+<span class="w">  </span><span class="nt">scale_computing.hypercore.vm_params</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vm_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-vm</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vm_name_new</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">renamed-vm</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test vm params</span><span class="w"></span>
+<span class="w">    </span><span class="nt">force_reboot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">shutdown_timeout</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="s1">&#39;5minutes&#39;</span> <span class="o">|</span> <span class="nf">community</span><span class="nv">.general.to_time_unit</span><span class="o">(</span><span class="s1">&#39;seconds&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">tags</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Group-name</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tag1</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tag2</span><span class="w"></span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="s1">&#39;512 MB&#39;</span> <span class="o">|</span> <span class="nf">human_to_bytes</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vcpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<span class="w">    </span><span class="nt">power_state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shutdown</span><span class="w"></span>
+<span class="w">    </span><span class="nt">snapshot_schedule</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-snap-schedule</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Delete description, tags and snapshot_schedule</span><span class="w"></span>
+<span class="w">  </span><span class="nt">scale_computing.hypercore.vm_params</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vm_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-vm</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">    </span><span class="nt">snapshot_schedule</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">check_mode</span></code> is not supported.</p>
+</div>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<dl>
+<dt>cluster_instance (optional)</dt><dd><p>Scale Computing HyperCore instance information.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: dict</div>
+</div>
+<dl>
+<dt>host (required)</dt><dd><p>The HyperCore instance URL.</p>
+<p>If not set, the value of the <code class="docutils literal notranslate"><span class="pre">SC_URL</span></code> environment variable will be used.</p>
+<p>For example “<a class="reference external" href="https://10.1.2.3:443">https://10.1.2.3:443</a>”.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: str</div>
+</div>
+</dd>
+<dt>password (required)</dt><dd><p>Password used for authentication.</p>
+<p>If not set, the value of the <code class="docutils literal notranslate"><span class="pre">SC_PASSWORD</span></code> environment variable will be used.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: str</div>
+</div>
+</dd>
+<dt>timeout (optional)</dt><dd><p>Timeout in seconds for the connection with the Scale Computing HyperCore API instance.</p>
+<p>If not set, the value of the <code class="docutils literal notranslate"><span class="pre">SC_TIMEOUT</span></code> environment variable will be used.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: float</div>
+</div>
+</dd>
+<dt>username (required)</dt><dd><p>Username used for authentication.</p>
+<p>If not set, the value of the <code class="docutils literal notranslate"><span class="pre">SC_USERNAME</span></code> environment variable will be used.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: str</div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt>description (optional)</dt><dd><p>VM’s description.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: str</div>
+</div>
+</dd>
+<dt>force_reboot (optional)</dt><dd><p>Can VM be forced to power off and on.</p>
+<p>Only used when modifications to the VM require it to be powered off and VM does not respond to a shutdown request within <em>shutdown_timeout</em> limit.</p>
+<p>Before this is utilized, a shutdown request is sent.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: bool</div>
+</div>
+</dd>
+<dt>memory (optional)</dt><dd><p>Amount of memory reserved, in bytes.</p>
+<p>May only be modified if VM is in <code class="docutils literal notranslate"><span class="pre">SHUTOFF</span></code> or <code class="docutils literal notranslate"><span class="pre">CRASHED</span></code> state.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: int</div>
+</div>
+</dd>
+<dt>power_state (optional)</dt><dd><p>Desired VM state.</p>
+<p>States <code class="docutils literal notranslate"><span class="pre">PAUSE</span></code> and <code class="docutils literal notranslate"><span class="pre">LIVEMIGRATE</span></code> are not exposed in this module (this can be done with raw api module).</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: str</div>
+<div class="line"><strong>choices</strong>: start, shutdown, stop, reboot, reset</div>
+</div>
+</dd>
+<dt>shutdown_timeout (optional)</dt><dd><p>How long does ansible controller wait for VMs response to a shutdown request.</p>
+<p>In seconds.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: float</div>
+<div class="line"><strong>default</strong>: 300</div>
+</div>
+</dd>
+<dt>snapshot_schedule (optional)</dt><dd><p>The name of an existing snapshot_schedule to assign to VM.</p>
+<p>VM can have 0 or 1 snapshot schedules assigned.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: str</div>
+</div>
+</dd>
+<dt>tags (optional)</dt><dd><p>User-modifiable words for organizing a group of VMs. Multiple tags should be provided as list.</p>
+<p>All existing tags will be overwritten, so group tag should always be included.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: list</div>
+</div>
+</dd>
+<dt>vcpu (optional)</dt><dd><p>Number of allotted virtual CPUs.</p>
+<p>May only be modified if VM is in <code class="docutils literal notranslate"><span class="pre">SHUTOFF</span></code> or <code class="docutils literal notranslate"><span class="pre">CRASHED</span></code> state.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: int</div>
+</div>
+</dd>
+<dt>vm_name (required)</dt><dd><p>Virtual machine name.</p>
+<p>Used to identify selected virtual machine by name.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: str</div>
+</div>
+</dd>
+<dt>vm_name_new (optional)</dt><dd><p>VM’s new name.</p>
+<div class="line-block">
+<div class="line"><strong>type</strong>: str</div>
+</div>
+</dd>
+</dl>
+</section>
+<section id="return-values">
+<h2>Return Values<a class="headerlink" href="#return-values" title="Permalink to this heading"></a></h2>
+<dl>
+<dt>vm_rebooted</dt><dd><p>Info if reboot of the VM was performed.</p>
+<p><strong>sample</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">vm_rebooted</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="vm_node_affinity.html" class="btn btn-neutral float-left" title="vm_node_affinity – Update virtual machine’s node affinity" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="vm_replication.html" class="btn btn-neutral float-right" title="vm_replication – Handles VM replications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, XLAB Steampunk.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
