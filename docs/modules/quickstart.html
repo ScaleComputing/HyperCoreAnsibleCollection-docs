@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+ <html xmlns= "http://www.w3.org/1999/xhtml" xml:lang="eng" lang="en">
+ <head>
+ <meta charset="utf-8" /> <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <title>Quickstart -- Getting started with HyperCore</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="vm_nic – Handles actions over network interfaces" href="vm_nic.html" />
+    <link rel="prev" title="vm_import – Handles import of the virtual machine" href="vm_import.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Hypercore Ansible Collection
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../quickstart.html">Quickstart</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#authentication-parameters">Authentication parameters</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#module-reference">Module reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="api.html">api – API interaction with Scale Computing HyperCore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iso.html">iso – Manage ISO images on HyperCore API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iso_info.html">iso_info – Retrieve ISO images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="node_info.html">node_info – Returns information about the nodes in a cluster.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remote_cluster_info.html">remote_cluster_info – Retrieve a list of remote clusters.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="snapshot_schedule.html">snapshot_schedule – Manage snap schedule to configure the desired schedule of snapshot creation.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="snapshot_schedule_info.html">snapshot_schedule_info – Retrieve information about an automated VM snapshot schedule.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task_wait.html">task_wait – Wait for a HyperCore TaskTag to be finished.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm.html">vm – Create, update or delete a VM.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_boot_devices.html">vm_boot_devices – Manage HyperCore VM’s boot devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_clone.html">vm_clone – Handles cloning of the VM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_disk.html">vm_disk – Manage VM’s disks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_export.html">vm_export – Handles export of the virtual machine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_import.html">vm_import – Handles import of the virtual machine</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">vm_info – Retrieve information about the VMs.</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#overview_and_terminology">Overview and Terminology</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#installation">Ansible Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="vm_nic.html">vm_nic – Handles actions over network interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_nic_info.html">vm_nic_info – Returns info about NIC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_node_affinity.html">vm_node_affinity – Update virtual machine’s node affinity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_params.html">vm_params – Manage VM’s parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_replication.html">vm_replication – Handles VM replications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vm_replication_info.html">vm_replication_info – Returns info about replication of a specific VM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Hypercore Ansible Collection</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../modules.html">Modules</a> &raquo;</li>
+      <li>vm_info – Retrieve information about the VMs.</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+<!-- scale_computing.hypercore.quickstart: -->
+<section id="quickstart-guide">
+<h2>Quickstart Guide</h2>
+<p>This guide will walk users through a few foundational Ansible terms and
+concepts, introduce the HyperCore collection, and provide guidance on
+writing playbooks.</p>
+<section id="introduction">
+<h3>Introduction</h3>
+<p>Scale Computing recently launched the SC//HyperCore Collection for Ansible. This exciting tool gives MSPs and distributed edge
+organizations the ability to implement declarative configuration
+management in their HyperCore fleet. Ansible is an IT automation tool
+designed to automate server provisioning and management via playbooks.
+These playbooks are similar to scripts, but have two key benefits,
+namely: they are human readable and idempotent, meaning they can be run
+several times and are smart enough to only take actions that are
+required (and skip those that aren’t) to put a HyperCore cluster in the
+desired state. These benefits make Ansible ideal for managing large
+HyperCore fleets.</p>
+<section id="note">
+<h4>Note</h4>
+<blockquote>
+<p>Ansible is an open source tool maintained by Red Hat. It is
+completely free to install and use. ScaleCare support may provide
+best-effort assistance in writing playbooks and diagnosing issues.
+However, the HyperCore Collection for Ansible is fully supported by
+Red Hat for customers that purchase the Red Hat Ansible Automation
+Platform.</p>
+</blockquote>
+<p><a class="reference external" href="https://www.scalecomputing.com/support">Contact ScaleCare Support</a></p>
+</section>
+</section>
+<section id="overview-and-terminology">
+<h3>Overview and Terminology</h3>
+<p>Before you can begin writing playbooks and automating HyperCore
+management, we must first cover a few important concepts. First, it is
+important to note that Ansible is a powerful tool that gives users the
+ability to accomplish the same task in a myriad of different ways. It
+gives users the building blocks needed to automate their own processes.
+Thus, this guide only scratches the surface of what can be accomplished
+with Ansible.</p>
+<p>Second, Ansible commands need to be run from an “Ansible Server” (also
+called an “Ansible Control Host”). In some cases, this is actually a
+dedicated physical server or VM, however this is not always necessary.
+Users can run ansible from a workstation, this local machine contains
+the necessary playbooks to run against the servers being managed.</p>
+<p>Third, Open SSH is the default communication standard used by Ansible
+for remote administration. Crucially, this is not how Ansible will
+communicate with HyperCore clusters, as will be demonstrated later in
+this guide. Now, let us turn to important terms and concepts.</p>
+</section>
+</section>
+<section id="inventory">
+<h2>Inventory</h2>
+<p>Ansible is incredibly useful for managing many HyperCore clusters.
+Ansible relies on an inventory file to establish which clusters you want
+to target with your playbooks. This file is most commonly formatted in
+either INI or YAML and lists your clusters. For larger organizations,
+the inventory is also the ideal location to organize your fleet,
+particularly when you desire different cluster states based on different
+criteria (location, size, purpose, etc.). The most basic YAML-formatted
+inventory file is organized like this:</p>
+<pre class="literal-block">all:
+  hosts:
+    mail.example.com:
+  children:
+    webservers:
+      hosts:
+        foo.example.com:
+        bar.example.com:
+    dbservers:
+      hosts:
+        one.example.com:
+        two.example.com:
+        Three.example.com:</pre>
+<p><em>hosts</em> denotes individual target servers (in the case of HyperCore you
+could point to a FQDN or IP address of a node in the cluster) while
+<em>children</em>: and signifiers like <em>webservers</em>: and <em>dbservers</em>: organize
+hosts into different categories. A small HyperCore inventory might look
+something like this:</p>
+<figure>
+<img alt="Inventory File Example" src="/image/sample.png" />
+<figcaption>
+<p>Alt Text</p>
+</figcaption>
+</figure>
+</section>
+<section id="ansible-configuration-file">
+<h2>Ansible Configuration File</h2>
+<p>When running Ansible commands and writing playbooks it is important to
+specify where your inventory is and other configuration specifics, like
+your Ansible collection path. This file serves as the center to all of
+your server interactions.</p>
+<p>Upon installing Ansible, you will be provided with a default
+configuration file (ansible.cfg). The default configuration is a large
+file that you can choose to use, however it is also fine to create your
+own simplified version. The most important thing is to make sure your
+work is referencing the correct configuration file. The easiest way to
+achieve this is by including an ansible.cfg in the directory where you
+are working with Ansible or setting it as an environment variable.</p>
+<p>For the purposes of this guide, you need to make sure your configuration
+file specifies where your inventory is located. All that is required is
+to set inventory = [folder that contains your inventory in your working
+ansible directory]. You can reference a specific file or an entire
+inventory folder. An example of a simple configuration file looks like
+this:</p>
+<figure>
+<img alt="Ansible Configuration File Example" src="/image/sample.png" />
+<figcaption>
+<p>Ansible Configuration File Example</p>
+</figcaption>
+</figure>
+</section>
+<section id="ansible-module">
+<h2>Ansible Module</h2>
+<p>Now that you are familiar with Ansible inventories and configuration
+files we can turn to the meat of Ansible and the HyperCore collection:
+modules. Ansible Modules are units of code that can control the servers
+that you are managing with Ansible. After installing Ansible, you will
+have access to a library of modules that give you the ability to execute
+specific tasks on remote servers through playbooks and individual
+commands. Scale Computing has made managing your HyperCore fleet via
+Ansible possible by developing our own set of modules that call existing
+cluster REST API endpoints. Extensive documentation on our current
+available modules can be found
+<a class="reference external" href="https://galaxy.ansible.com/scale_computing/hypercore">here</a>.</p>
+<p>For example: <em>scale_computing.hypercore.vm</em> is the module that will
+allow you to create, update, and delete virtual machines. When you begin
+writing playbooks, you will reference a specific module when attempting
+to automate a task associated with that said module is equipped to
+handle.</p>
+</section>
+<section id="ansible-playbook">
+<h2>Ansible Playbook</h2>
+<p>Finally, playbooks are the most important piece of Ansible. Playbooks
+allow you to automate tasks that would normally need to be done more
+than once across the clusters in your fleet. While similar to scripts,
+playbooks are much easier to write because they are human readable.
+Additionally, we have in-depth documentation about every module
+available in the Ansible collection, with specific examples of how each
+module can be written as a task that is part of a playbook.
+Additionally, playbooks and Ansible are idempotent, meaning that they
+are smart enough to know if a cluster already has a desired
+configuration and skip tasks that do not need repeated.</p>
+<p>At a high level, playbooks typically begin with the author specifying
+which hosts (in our case HyperCore clusters) are going to be targeted.
+They will then establish the method by which Ansible will connect to the
+remote hosts (in our case this will be <em>connection:
+ansible.builtin.local</em>). Once these have been established, the author
+can begin writing tasks in the order in which they will be carried out;
+calling out the necessary ansible modules and module parameters along
+the way.</p>
+<p>In a future section, you will get an overview of how to start writing
+your own playbooks.</p>
+</section>
+</main>
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../modules.html" class="btn btn-neutral float-left" title="Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="iso.html" class="btn btn-neutral float-right" title="iso – Manage ISO images on HyperCore API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, XLAB Steampunk.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

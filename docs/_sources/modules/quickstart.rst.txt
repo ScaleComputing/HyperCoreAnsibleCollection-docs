@@ -1,14 +1,16 @@
-SC // HyperCore Collection for Ansible
-======================================
+.. scale_computing.hypercore.quickstart:
 
 Quickstart Guide
 ----------------
 
+This guide will walk users through a few foundational Ansible terms and
+concepts, introduce the HyperCore collection, and provide guidance on
+writing playbooks.
+
 Introduction
 ============
 
-Scale Computing recently launched the SC//HyperCore Collection for
-Ansible. This exciting tool gives MSPs and distributed edge
+Scale Computing recently launched the SC//HyperCore Collection for Ansible. This exciting tool gives MSPs and distributed edge
 organizations the ability to implement declarative configuration
 management in their HyperCore fleet. Ansible is an IT automation tool
 designed to automate server provisioning and management via playbooks.
@@ -18,10 +20,6 @@ several times and are smart enough to only take actions that are
 required (and skip those that aren’t) to put a HyperCore cluster in the
 desired state. These benefits make Ansible ideal for managing large
 HyperCore fleets.
-
-This guide will walk users through a few foundational Ansible terms and
-concepts, introduce the HyperCore collection, and provide guidance on
-writing playbooks.
 
 Note
 ~~~~
