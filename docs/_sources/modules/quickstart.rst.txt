@@ -28,7 +28,7 @@ HyperCore fleets.
 
    However, the HyperCore Collection for Ansible is fully 
    supported by Red Hat for customers that purchase the 
-   .. _Red Hat Ansible Automation Platform: https://www.ansible.com/products/automation-platform
+   `Red Hat Ansible Automation Platform <https://www.ansible.com/products/automation-platform>`_
 
    `Contact ScaleCare Support <https://www.scalecomputing.com/support>`_
 
