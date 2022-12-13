@@ -7,8 +7,7 @@ This guide will walk users through a few foundational Ansible terms and
 concepts, introduce the HyperCore collection, and provide guidance on
 writing playbooks.
 
-Introduction
-------------
+**Introduction**
 
 Scale Computing recently launched the SC//HyperCore Collection for Ansible. This exciting tool gives MSPs and distributed edge
 organizations the ability to implement declarative configuration
@@ -22,10 +21,18 @@ desired state. These benefits make Ansible ideal for managing large
 HyperCore fleets.
 
 .. note::
-   ``check_mode`` is not supported.
+   Ansible is an open source tool maintained by Red Hat. It is
+   completely free to install and use. ScaleCare support may
+   provide best-effort assistance in writing playbooks and
+   diagnosing issues. 
 
-Overview and Terminology
-------------------------
+   However, the HyperCore Collection for Ansible is fully 
+   supported by Red Hat for customers that purchase the 
+   `Red Hat Ansible Automation Platform. <https://www.ansible.com/products/automation-platform>'_
+
+   `Contact ScaleCare Support <https://www.scalecomputing.com/support>`_
+
+**Overview and Terminology**
 
 Before you can begin writing playbooks and automating HyperCore
 management, we must first cover a few important concepts. First, it is
@@ -46,7 +53,8 @@ for remote administration. Crucially, this is not how Ansible will
 communicate with HyperCore clusters, as will be demonstrated later in
 this guide. Now, let us turn to important terms and concepts.
 
-**Inventory**
+Inventory
+---------
 
 Ansible is incredibly useful for managing many HyperCore clusters.
 Ansible relies on an inventory file to establish which clusters you want
@@ -84,7 +92,8 @@ something like this:
 
    Alt Text
 
-**Ansible Configuration File**
+Ansible Configuration File
+---------------------------
 
 When running Ansible commands and writing playbooks it is important to
 specify where your inventory is and other configuration specifics, like
@@ -111,7 +120,8 @@ this:
 
    Ansible Configuration File Example
 
-**Ansible Module**
+Ansible Module
+--------------
 
 Now that you are familiar with Ansible inventories and configuration
 files we can turn to the meat of Ansible and the HyperCore collection:
@@ -131,7 +141,8 @@ writing playbooks, you will reference a specific module when attempting
 to automate a task associated with that said module is equipped to
 handle.
 
-**Ansible Playbook**
+Ansible Playbook
+-----------------
 
 Finally, playbooks are the most important piece of Ansible. Playbooks
 allow you to automate tasks that would normally need to be done more
