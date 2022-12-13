@@ -88,7 +88,7 @@ could point to a FQDN or IP address of a node in the cluster) while
 hosts into different categories. A small HyperCore inventory might look
 something like this:
 
-.. figure:: /image/sample.png
+.. figure:: /docs/_static/file.png
    :alt: Inventory File Example
 
    Alt Text
