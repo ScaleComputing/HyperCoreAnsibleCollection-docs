@@ -7,8 +7,8 @@ This guide will walk users through a few foundational Ansible terms and
 concepts, introduce the HyperCore collection, and provide guidance on
 writing playbooks.
 
-**Introduction**
-
+Introduction
+=============
 Scale Computing recently launched the SC//HyperCore Collection for Ansible. This exciting tool gives MSPs and distributed edge
 organizations the ability to implement declarative configuration
 management in their HyperCore fleet. Ansible is an IT automation tool
@@ -28,11 +28,12 @@ HyperCore fleets.
 
    However, the HyperCore Collection for Ansible is fully 
    supported by Red Hat for customers that purchase the 
-   .. _Red Hat Ansible Automation Platform: https://www.ansible.com/products/automation-platform
+   `Red Hat Ansible Automation Platform <https://www.ansible.com/products/automation-platform>`_
 
    `Contact ScaleCare Support <https://www.scalecomputing.com/support>`_
 
-**Overview and Terminology**
+Overview and Terminology
+========================
 
 Before you can begin writing playbooks and automating HyperCore
 management, we must first cover a few important concepts. First, it is
