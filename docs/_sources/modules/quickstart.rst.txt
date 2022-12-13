@@ -22,13 +22,12 @@ desired state. These benefits make Ansible ideal for managing large
 HyperCore fleets.
 
 .. note::
-
    Ansible is an open source tool maintained by Red Hat. It is
    completely free to install and use. ScaleCare support may provide
    best-effort assistance in writing playbooks and diagnosing issues.
    However, the HyperCore Collection for Ansible is fully supported by
    Red Hat for customers that purchase the `Red Hat Ansible Automation
-   Platform. <https://www.ansible.com/products/automation-platform>`_
+   Platform. <https://www.ansible.com/products/automation-platform>`__
 
    `Contact ScaleCare Support <https://www.scalecomputing.com/support>`__
 
