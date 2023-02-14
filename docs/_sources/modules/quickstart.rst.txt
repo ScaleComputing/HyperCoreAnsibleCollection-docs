@@ -167,3 +167,90 @@ the way.
 
 In a future section, you will get an overview of how to start writing
 your own playbooks.
+
+Ansible Installation
+====================
+
+Now that you have a basic understanding of key Ansible concepts we can turn to installing Ansible and the HyperCore collection. **Note:** your ansible
+server (where you run your commands) must be a UNIX-like machine with Python 3.8 or newer. This guide uses an Ubuntu 20.04 virtual machine to demonstrate how to install Ansible. 
+
+1. Install ansible: `sudo apt install ansible`
+	a. This command will install of the ncessary packages, libraries, and bianaries needed to run Ansible. 
+2. Now that you have installed Ansible, you need to install the HyperCored Collection with this command: `ansible-galaxy collection install scale_computing.hypercore`
+	a. Installing the HyperCore collection will give you access to all of the modules we have built to allow you to automate tasks within HyperCore. 
+	b. Full documentation on our collection can be found at [ansible galaxy](https://galaxy.ansible.com/scale_computing/hypercorehttps://galaxy.ansible.com/scale_computing/hypercore)
+
+**Image**
+
+3. You are now ready to start using Ansible with your HyperCore clusters! Before turning to writing Playbooks, you can test that the collections was successfully installed by running single-module commands. 
+4. Specify a HyperCore cluster to test an Ansible module against with the following commands:
+```
+export SC_HOST=https://1.2.3.4
+export SC_USERNAME=admin
+export SC_PASSWORD= admin_pass
+```
+
+**Image**
+
+5. You can now run your first Ansible command against the test cluster you previously specified! Enter the following command:
+`Ansible -i localhost, --connection=ansible.builtin.local all -m scale_computing.hypercore.vm_info`
+
+This command is targeting your local host *(localhost)*, using the required connection protocol for HyperCore clusters instead of default ssh *(--connection=ansible.builtin.local)*, using the `scale_computing.hypercore.vm_info` module. If successful, this command should return information about every VM running on your target cluster. 
+
+**Image**
+
+Congratulations! You have successfully installed Ansible and the HyperCore collection. The next section will walk you through setting up a basic inventory file and writing a playbook. 
+
+Getting Started with Playbooks
+==============================
+
+With Ansible and the HyperCore collection downloaded and installed, you are now ready to start writing your own Playbooks. As mentioned earlier, playbooks are essentially scripts that automate a series of tasks to be run against your HyperCore fleet. However, playbooks are much easier to write than normal scripts because they are simply YAML-formatted text files that are interpreted by Ansible. 
+
+While exporting HyperCore cluster information at the command line works perfectly fine for one-off Ansible commands (like in the previous section), Playbooks rely on an inventory file to establish which clusters are in  your fleet and are automated. In order to get started writing Playbooks, you should first create an inventory file in the directory where you downloaded and installed Ansible and the HyperCore Collection.
+
+1. Create a folder called "inventory"
+2. Create a file called "inventory" within this folder"
+	a. Inventory files can be YAML, JSON, and INI formatted. 
+	b. **Note** this can be done easily via a text editor like nano or a source-code editor like Visual Studio Code (VSC). 
+	c. This example includes groups (which are entirely optional), but demonstrate how an inventory file could be used to organize a larger fleet. 
+	d. Here is a handy reference for [creating more complex inventory files](https://docs.ansible.com/ansible/2.5/user_guide/intro_inventory.html). 
+
+```
+all:
+  children:
+    hypercore:
+      children:
+        testclusters:
+          hosts:
+            "{your cluster IP address":
+          vars:
+	    scale_user: {your cluster user account}
+	    scale_pass: {your account password}
+```
+
+3. Once you have created a basic inventory, save the file. 
+	a. **Note**: YAML formatting is picky and can disrupt running on Playbooks. We recommend using a source-code editor with an Ansible plug-in to help diagnose formatting issues. 
+
+In the previous section, you created an inventory that contains one cluster. Please note that in reality, Ansible inventories will contain all of the clusters within your fleet. Inventories can be a single file or a collection of several files that call out different host groups and host variables. Which strategy you determine when building your full inventory will depend on the size of your fleet and the granularity you require when running different types of Playbooks. 
+
+Due to the flexibility of Ansible, you will also need to create an Ansible Configuration file to set your defaults, like calling out which inventory Ansible should reference. For the purposes of this guide, you only need to make sure your configuration file specifies that your inventory is equal to the folder that contains your inventory in your working Ansible directory. 
+
+1. Create new file called `ansible.cfg` in the directory you are using for Ansible. 
+2. Open an editing tool and create the following:
+
+**Image**
+
+3. This file allows you to set basic Ansible defaults, more importantly, you are instructing Ansible to reference your "inventory" file that you created in the previous step. **Note** this can be a full file path if you are referencing a specific file or simply call out the entire folder (if you are distributing your inventory amongst several files). In this case it does not really matter since you only have one file in your inventory folder. 
+
+With basic inventory and `ansbile.cfg` files created, we can now begin writing Playbooks. 
+ 
+## Writing Playbooks
+
+This guide will now demonstrate how to create a Playbook that will create a VM on your test cluster. 
+
+1. Create a new file called `simple_vm_create.yml` in the directory you are using for Ansible.
+2. Open an editing tool and begin your Playbook with the following:
+
+**Image**
+
+	a. **Note**: All YAML files, including Playbooks, begin with "---" and the information that specifies the purpose of the Playbook. This identifies host targets, whether to gather basic facts about the target hosts, and how Ansible will communicate with those targets. Remember, SSH is the default protocol used by Ansible, so when writing Playbooks with the HyperCore Collection, you should specify `ansbile.builtin.local.`
