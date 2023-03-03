@@ -254,3 +254,52 @@ This guide will now demonstrate how to create a Playbook that will create a VM o
 **Image**
 
 	a. **Note**: All YAML files, including Playbooks, begin with "---" and the information that specifies the purpose of the Playbook. This identifies host targets, whether to gather basic facts about the target hosts, and how Ansible will communicate with those targets. Remember, SSH is the default protocol used by Ansible, so when writing Playbooks with the HyperCore Collection, you should specify `ansbile.builtin.local.`
+3. After specifying this information, you can start adding tasks to your playbook
+4. A few lines after your introduction block of test write `tasks:`
+	a. This line tells Ansible that the text below will outline specific actions to be performed. 
+	b. `Tasks:` should be lined up directly below `gather_facts: False`
+
+**Image**
+
+5. Each individual task in a Playbook shoule begin with "- name:" and a concise name that explains the purpose of that task. This name helps you understand what each task in a Playbook is attempting to accomplish. 
+6. The next line specifies which module you are using from the HyperCore Collecction to archieve the task. Right now the HyperCore Collection contains 19 individual modules that facilitate actions related to workload lifecycle management. The best place to start with writing and formatting tasks using these modules is our [published documentation](https://galaxy.ansible.com/scale_computing/hypercore). At this link, you will find clear explanations of what each module enables and examples on how to correctly write a task with each module. 
+
+**Image**
+
+7. For the purposes of this guide, you can reference the [scale_computing.hypercore.vm](https://scalecomputing.github.io/HyperCoreAnsibleCollection-docs/modules/vm.html) module then copy and paste the example task for creating a VM into your Playbook. 
+
+- `name:` Create and start the VM with disks, nics and boot devices set. 
+Attach ISO onto the VM. Add cloud init data. 
+  `scale_computing.hypercore.vm:`
+    `vm_name:` vm-integration-test-vm
+    `description:` Demo VM
+    `state:` present
+    `tags:`
+       - my-group
+       - mytag1
+       - mytag2
+    `memory: "{{ 512 MB | human_to_bytes }}"`
+    `vcpu:` 2
+    `attach_guest_tools_iso:` true
+    `power_state:` start
+    `force_reboot:` true
+    `shutdown_timeout:` `"{{ '5 minutes' |`
+  `community.general.to_time_unit('seconds') }}"`
+    `disks:`
+      - `type:` virtio_disk
+        `disk_slot:` 0
+        `size:` `"{{ '10.1 GB' | human_to_bytes }}"`
+      - `type:` ide_cdrom
+        `disk_slot:` 0
+        `iso_name:` TinyCore-current.iso
+   `nics:`
+      - `vlan:` 0
+        `type:` RTL8139
+   `boot_devices:`
+      - `type:` virtio_disk
+        `disk_slot:` 0
+      - `type:` nic
+        `nic_vlan:` 0
+   `cloud_init:`
+     `user_data:` |
+
